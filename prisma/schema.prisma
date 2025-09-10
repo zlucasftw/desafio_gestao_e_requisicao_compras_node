@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  APPROVER
+}
+
+enum Status {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+model Users {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+
+  purchaseRequests  PurchaseRequests[]
+  approvalHistories ApprovalHistory[]
+}
+
+model PurchaseRequests {
+  id          Int      @id @default(autoincrement())
+  title       String    
+  description String?   @db.VarChar(255)
+  quantity    Int
+  status      Status   @default(DRAFT)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  products    RequestItems[]
+
+  userId      Int
+  user        Users    @relation(fields: [userId], references: [id])
+}
+
+model RequestItems {
+  id                Int      @id @default(autoincrement())
+  title             String
+  description       String?   @db.VarChar(255)
+  productId         Int
+  quantity          Int
+
+  purchaseRequestId Int
+  purchaseRequest   PurchaseRequests @relation(fields: [purchaseRequestId], references: [id])
+
+  approvalHistory   ApprovalHistory[]
+}
+
+model ApprovalHistory {
+  id                Int      @id @default(autoincrement())
+  action            String
+  reason            String   @db.VarChar(255)
+  oldStatus         Status
+  newStatus         Status
+  createdAt         DateTime @default(now())
+
+  approverId        Int
+  approver          Users @relation(fields: [approverId], references: [id])
+
+  purchaseRequestId Int
+  purchaseRequest   PurchaseRequests @relation(fields: [purchaseRequestId], references: [id])
+
+  itemRequestId  Int
+  itemRequests   RequestItems[] @relation(fields: [itemRequestId], references: [id])
+}
+
