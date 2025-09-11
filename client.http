@@ -1,4 +1,25 @@
 # API Health check endpoint
 GET http://localhost:3333/health
 
+###
 
+# API POST Endpoint to create a user
+POST http://localhost:3333/register
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "johhn.ddoeeeedee@example.com",
+    "password": "passwordd"
+}
+
+###
+
+# API POST Endpoint to login a user
+POST http://localhost:3333/login
+Content-Type: application/json
+
+{
+    "email": "johhn.ddoeeeedee@example.com",
+    "password": "passwordd"
+}

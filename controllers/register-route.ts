@@ -1,9 +1,11 @@
-import { PrismaClient } from "@prisma/client";
-import { FastifyPluginCallback } from "fastify";
-import { RegisterRequestBody } from "../models/register-input.js";
-import fastifyJwt from "@fastify/jwt";
+import type { FastifyPluginCallback } from "fastify";
+import type { RegisterRequestBody } from "../models/register-input.js";
+import { hash }  from "argon2";
+import { db as PrismaClient } from "../config/connection.ts";
 
-export const logInRoute : FastifyPluginCallback= (app) => {
+const prisma = PrismaClient;
+
+export const registerRoute : FastifyPluginCallback = (app) => {
 
     app.post("/register", async (request, reply) => {
         
@@ -11,23 +13,23 @@ export const logInRoute : FastifyPluginCallback= (app) => {
             email,
             name,
             password
-        } : RegisterRequestBody = request.body;
+        } : RegisterRequestBody = request.body as RegisterRequestBody;
 
-        const existingUser = await prisma.users.findUnique({
+        const getExistingUserByEmail = await prisma.users.findUnique({
             where: { email }
         });
 
-        if (existingUser) {
+        if (getExistingUserByEmail) {
             return reply.status(409).send({ message: 'Email already in use' });
         }
         
-        const hashedPassword = await app.jwt.sign({ password });
+        const hashedPassword = await hash(password);
 
         const user = await prisma.users.create({
             data: {
                 email,
                 name,
-                password
+                password: hashedPassword,
             }
         });
 

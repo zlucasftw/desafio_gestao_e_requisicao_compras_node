@@ -1,12 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -46,7 +39,9 @@ model PurchaseRequests {
   status      Status   @default(DRAFT)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
   products    RequestItems[]
+  histories   ApprovalHistory[]
 
   userId      Int
   user        Users    @relation(fields: [userId], references: [id])
@@ -56,13 +51,12 @@ model RequestItems {
   id                Int      @id @default(autoincrement())
   title             String
   description       String?   @db.VarChar(255)
-  productId         Int
   quantity          Int
+  productId         Int
+  createdAt         DateTime @default(now())
 
   purchaseRequestId Int
   purchaseRequest   PurchaseRequests @relation(fields: [purchaseRequestId], references: [id])
-
-  approvalHistory   ApprovalHistory[]
 }
 
 model ApprovalHistory {
@@ -79,7 +73,11 @@ model ApprovalHistory {
   purchaseRequestId Int
   purchaseRequest   PurchaseRequests @relation(fields: [purchaseRequestId], references: [id])
 
-  itemRequestId  Int
-  itemRequests   RequestItems[] @relation(fields: [itemRequestId], references: [id])
+
+
+    /* itemRequestId  Int
+    itemRequests   RequestItems[] @relation(fields: [itemRequestId], references: [id]) */
+
+  /* @@index([approverId, purchaseRequestId], name: "fk_approver_purchase_request") */
 }
 
