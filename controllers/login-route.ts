@@ -8,7 +8,7 @@ const prisma = PrismaClient;
 
 export const loginRoute: FastifyPluginAsync = async (app) => {
 
-    app.post("/login", async (request, reply) => {
+    app.post("/auth/login", async (request, reply) => {
 
         const { 
             email,
@@ -24,7 +24,7 @@ export const loginRoute: FastifyPluginAsync = async (app) => {
         }
         
         const token = await authService(existingUser.id, existingUser.email);
-
+        
         return reply.status(200).send({ token });
     });
     

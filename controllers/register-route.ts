@@ -7,7 +7,7 @@ const prisma = PrismaClient;
 
 export const registerRoute : FastifyPluginCallback = (app) => {
 
-    app.post("/register", async (request, reply) => {
+    app.post("/auth/register", async (request, reply) => {
         
         const { 
             email,
@@ -33,7 +33,8 @@ export const registerRoute : FastifyPluginCallback = (app) => {
             }
         });
 
-        return reply.status(201).send(user);
+        reply.header('origin', `http://${process.env.HOST}:${process.env.PORT}/auth/register/${user.id}`);
+        return reply.status(201).send();
     });
     
 }

@@ -8,13 +8,8 @@ app.get("/health", () => {
     return { "status": "OK" };
 });
 
-/* app.register(fastifySwagger. {
-
-}) */
-
-/* app.register(fastifyBcrypt, { saltRounds: 12 }); */
 
 app.register(loginRoute);
 app.register(registerRoute);
 
-app.listen({ port: process.env.PORT || 3333 });
+app.listen({ port: process.env.PORT || 3333, host: process.env.HOST });

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export const authService = async (id: number, role: string) => {
+export const authService = async (id: string, role: string) => {
     
     if (!process.env.JWT_SECRET) {
         throw new Error("JWT_SECRET must be defined!");

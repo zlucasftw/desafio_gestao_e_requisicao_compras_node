@@ -20,7 +20,7 @@ enum Status {
 }
 
 model Users {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   email     String   @unique
   name      String
   password  String
@@ -32,9 +32,9 @@ model Users {
 }
 
 model PurchaseRequests {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid())
   title       String    
-  description String?   @db.VarChar(255)
+  description String?  @db.VarChar(255)
   quantity    Int
   status      Status   @default(DRAFT)
   createdAt   DateTime @default(now())
@@ -43,34 +43,34 @@ model PurchaseRequests {
   products    RequestItems[]
   histories   ApprovalHistory[]
 
-  userId      Int
+  userId      String
   user        Users    @relation(fields: [userId], references: [id])
 }
 
 model RequestItems {
-  id                Int      @id @default(autoincrement())
+  id                String    @id @default(uuid())
   title             String
   description       String?   @db.VarChar(255)
   quantity          Int
-  productId         Int
+  productId         String
   createdAt         DateTime @default(now())
 
-  purchaseRequestId Int
+  purchaseRequestId String
   purchaseRequest   PurchaseRequests @relation(fields: [purchaseRequestId], references: [id])
 }
 
 model ApprovalHistory {
-  id                Int      @id @default(autoincrement())
+  id                String   @id @default(uuid())
   action            String
   reason            String   @db.VarChar(255)
   oldStatus         Status
   newStatus         Status
   createdAt         DateTime @default(now())
 
-  approverId        Int
+  approverId        String
   approver          Users @relation(fields: [approverId], references: [id])
 
-  purchaseRequestId Int
+  purchaseRequestId String
   purchaseRequest   PurchaseRequests @relation(fields: [purchaseRequestId], references: [id])
 
 
