@@ -1,4 +1,4 @@
-export type LoginRequestBody  ={
+export type LoginRequestBody = {
     email: string;
     password: string;
 }

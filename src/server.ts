@@ -1,15 +1,63 @@
 import fastify from "fastify";
 import { loginRoute } from "../controllers/login-route.ts";
 import { registerRoute } from "../controllers/register-route.ts";
+import { requestsPostRoute } from "../controllers/requests-post-route.ts";
+import { getAllRequestsRoute } from "../controllers/requests-get-route.ts";
+import { jsonSchemaTransform, serializerCompiler, validatorCompiler, type ZodTypeProvider } from "fastify-type-provider-zod";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUi from "@fastify/swagger-ui";
+import scalarAPIReference from '@scalar/fastify-api-reference';
+import fastifyJwt from "@fastify/jwt";
+import z from "zod";
 
-const app = fastify();
+const app = fastify({
+    logger: {
+        transport: {
+            target: 'pino-pretty',
+            options: {
+                translateTime: 'HH:MM:ss Z',
+                ignore: 'pid,hostname'
+            },
+        },
+    },
+}).withTypeProvider<ZodTypeProvider>();
+
+if (process.env.NODE_ENV !== "production") {
+    app.register(fastifySwagger, {
+        openapi: {
+            info: {
+                title: "Request Management API",
+                description: "API for managing purchase requests",
+                version: "1.0.0",
+            },
+        },
+        transform: jsonSchemaTransform,
+    });
+    app.register(scalarAPIReference, {
+        routePrefix: '/docs',
+    });
+    app.register(fastifySwaggerUi, {
+        routePrefix: '/v2/docs',
+    });
+}
+
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
 
 app.get("/health", () => {
     return { "status": "OK" };
 });
 
-
+/* app.register(fastifyJwt, { secret: process.env.JWT_SECRET }); */
 app.register(loginRoute);
 app.register(registerRoute);
+app.register(requestsPostRoute);
+app.register(getAllRequestsRoute);
 
-app.listen({ port: process.env.PORT || 3333, host: process.env.HOST });
+/* app.addHook("onRequest", async (request, reply) => {
+    const token = await request.jwtVerify();
+}) */
+
+app.listen({ port: process.env.PORT || 3333, host: process.env.HOST }, () => {
+    console.info(`Server is running at http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3333}`);
+});

@@ -36,6 +36,9 @@ model PurchaseRequests {
   title       String    
   description String?  @db.VarChar(255)
   quantity    Int
+
+  totalPrice  Decimal   @db.Decimal(10, 2)
+
   status      Status   @default(DRAFT)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -51,9 +54,12 @@ model RequestItems {
   id                String    @id @default(uuid())
   title             String
   description       String?   @db.VarChar(255)
+  
   quantity          Int
+  price             Decimal   @db.Decimal(10, 2)
+
   productId         String
-  createdAt         DateTime @default(now())
+  createdAt         DateTime  @default(now())
 
   purchaseRequestId String
   purchaseRequest   PurchaseRequests @relation(fields: [purchaseRequestId], references: [id])
@@ -72,12 +78,5 @@ model ApprovalHistory {
 
   purchaseRequestId String
   purchaseRequest   PurchaseRequests @relation(fields: [purchaseRequestId], references: [id])
-
-
-
-    /* itemRequestId  Int
-    itemRequests   RequestItems[] @relation(fields: [itemRequestId], references: [id]) */
-
-  /* @@index([approverId, purchaseRequestId], name: "fk_approver_purchase_request") */
 }
 

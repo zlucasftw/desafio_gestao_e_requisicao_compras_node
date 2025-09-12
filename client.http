@@ -23,3 +23,23 @@ Content-Type: application/json
     "email": "john.doe@example.com",
     "password": "password"
 }
+
+###
+
+# API GET Endpoint to fetch user buying requests
+GET http://localhost:3333/requests
+
+###
+
+# API POST Endpoint to create a buying request
+POST http://localhost:3333/requests
+Authorization: <jwt_token>
+Content-Type: application/json
+
+{
+    "title": "New Purchase Request",
+    "description": "Requesting new office supplies",
+    "quantity": 10,
+    "totalPrice": 1,
+    "userId": "f31c84ba-50d3-49ea-882c-5d0ff16ab31a"
+}
