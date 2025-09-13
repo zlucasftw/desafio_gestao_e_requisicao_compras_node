@@ -1,6 +1,9 @@
 import jwt from "jsonwebtoken";
 import type { JwtHeaderRequest } from "../models/jwt-input.ts";
 
+// TODO - Change method signature and return type accordingly
+// The return of the userId extracted should be separate from
+// the validation of the token
 export const checkAuthorizationService = async (token: string) => {
     if (!token) {
         return false;

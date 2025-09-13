@@ -33,13 +33,33 @@ GET http://localhost:3333/requests
 
 # API POST Endpoint to create a buying request
 POST http://localhost:3333/requests
-Authorization: <jwt_token>
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3NDY4NjAsImV4cCI6MTc1Nzc1MDQ2MH0.M7gX_pg14UbRJhvBzD-Rggp0EjS_DRdwfCPgY6eBv28
 Content-Type: application/json
 
 {
     "title": "New Purchase Request",
     "description": "Requesting new office supplies",
     "quantity": 10,
-    "totalPrice": 1,
-    "userId": "f31c84ba-50d3-49ea-882c-5d0ff16ab31a"
+    "totalPrice": 150,
+    "items": [
+        {
+            "title": "Item 1",
+            "description": "Description for Item 1",
+            "quantity": 5,
+            "price": 30
+        },
+        {
+            "title": "Item 2",
+            "description": "Description for Item 2",
+            "quantity": 5,
+            "price": 30
+        }
+    ]
 }
+
+###
+
+# API GET Endpoint to fetch a specific buying request by ID
+GET http://localhost:3333/requests/02cb950b-81a8-43dc-9c29-64ed524901b2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3NDY4NjAsImV4cCI6MTc1Nzc1MDQ2MH0.M7gX_pg14UbRJhvBzD-Rggp0EjS_DRdwfCPgY6eBv28
+

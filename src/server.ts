@@ -7,8 +7,7 @@ import { jsonSchemaTransform, serializerCompiler, validatorCompiler, type ZodTyp
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import scalarAPIReference from '@scalar/fastify-api-reference';
-import fastifyJwt from "@fastify/jwt";
-import z from "zod";
+import { getRequestById } from "../controllers/requests-get-by-id.ts";
 
 const app = fastify({
     logger: {
@@ -48,15 +47,11 @@ app.get("/health", () => {
     return { "status": "OK" };
 });
 
-/* app.register(fastifyJwt, { secret: process.env.JWT_SECRET }); */
 app.register(loginRoute);
 app.register(registerRoute);
 app.register(requestsPostRoute);
 app.register(getAllRequestsRoute);
-
-/* app.addHook("onRequest", async (request, reply) => {
-    const token = await request.jwtVerify();
-}) */
+app.register(getRequestById);
 
 app.listen({ port: process.env.PORT || 3333, host: process.env.HOST }, () => {
     console.info(`Server is running at http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3333}`);

@@ -20,10 +20,11 @@ enum Status {
 }
 
 model Users {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String
-  password  String
+  id       String @id @default(uuid())
+  email    String @unique
+  name     String
+  password String
+
   role      Role     @default(USER)
   createdAt DateTime @default(now())
 
@@ -32,51 +33,50 @@ model Users {
 }
 
 model PurchaseRequests {
-  id          String   @id @default(uuid())
-  title       String    
-  description String?  @db.VarChar(255)
+  id          String  @id @default(uuid())
+  title       String
+  description String? @db.VarChar(255)
   quantity    Int
 
-  totalPrice  Decimal   @db.Decimal(10, 2)
+  totalPrice Float @db.Float
 
-  status      Status   @default(DRAFT)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  status    Status   @default(DRAFT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  products    RequestItems[]
-  histories   ApprovalHistory[]
+  items     RequestItems[]
+  histories ApprovalHistory[]
 
-  userId      String
-  user        Users    @relation(fields: [userId], references: [id])
+  userId String
+  user   Users  @relation(fields: [userId], references: [id])
 }
 
 model RequestItems {
-  id                String    @id @default(uuid())
-  title             String
-  description       String?   @db.VarChar(255)
-  
-  quantity          Int
-  price             Decimal   @db.Decimal(10, 2)
+  id          String  @id @default(uuid())
+  title       String
+  description String? @db.VarChar(255)
 
-  productId         String
-  createdAt         DateTime  @default(now())
+  quantity Int
+  price    Float      @db.Float
 
-  purchaseRequestId String
-  purchaseRequest   PurchaseRequests @relation(fields: [purchaseRequestId], references: [id])
+  createdAt DateTime  @default(now())
+
+  purchaseRequestId   String
+  purchaseRequest     PurchaseRequests @relation(fields: [purchaseRequestId], references: [id])
 }
 
 model ApprovalHistory {
-  id                String   @id @default(uuid())
-  action            String
-  reason            String   @db.VarChar(255)
-  oldStatus         Status
-  newStatus         Status
-  createdAt         DateTime @default(now())
+  id String @id @default(uuid())
 
-  approverId        String
-  approver          Users @relation(fields: [approverId], references: [id])
+  oldStatus Status
+  newStatus Status
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  approverId String
+  approver   Users  @relation(fields: [approverId], references: [id])
 
   purchaseRequestId String
   purchaseRequest   PurchaseRequests @relation(fields: [purchaseRequestId], references: [id])
 }
-

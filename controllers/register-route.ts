@@ -18,7 +18,7 @@ export const registerRoute: FastifyPluginCallbackZod = (app) => {
             password: z.string().min(6, 'Password must be at least 6 characters long').max(128),
         }),
         response: {
-            201: z.uuid(),
+            201: z.object({ id: z.uuid() }),
             400: z.object({ message: z.string('Bad Request') }),
             409: z.object({ message: z.string('Email already in use') })
         },
@@ -43,7 +43,7 @@ export const registerRoute: FastifyPluginCallbackZod = (app) => {
         });
 
         reply.header('origin', `http://${process.env.HOST}:${process.env.PORT}/auth/register/${user.id}`);
-        return reply.status(201).send(user.id);
+        return reply.status(201).send({ id: user.id });
     });
     
 }

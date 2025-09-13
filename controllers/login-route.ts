@@ -20,7 +20,8 @@ export const loginRoute: FastifyPluginAsyncZod = async (app) => {
             }),
             response: {
                 200: z.object({
-                    token: z.jwt(),
+                    token: z.string(),
+                    id: z.uuidv4(),
                 }),
                 400: z.object({ message: z.string('Bad Request') }),
                 401: z.object({ message: z.string('Invalid email or password') }),
@@ -40,7 +41,7 @@ export const loginRoute: FastifyPluginAsyncZod = async (app) => {
         
         const token = await authService(existingUser.id, existingUser.email);
         
-        return reply.status(200).send({ token });
+        return reply.status(200).send({ token, id: existingUser.id });
     });
     
 }

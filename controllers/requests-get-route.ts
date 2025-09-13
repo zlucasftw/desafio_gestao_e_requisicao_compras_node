@@ -32,7 +32,19 @@ export const getAllRequestsRoute: FastifyPluginCallbackZod = (app) => {
         }
     }, async (request, reply) => {
         
-        const allPurchaseRequests = await prisma.purchaseRequests.findMany();
+        const allPurchaseRequests = await prisma.purchaseRequests.findMany({
+            include: {
+                items: {
+                    select: {
+                        id: true,
+                        title: true,
+                        description: true,
+                        quantity: true,
+                        price: true,
+                    },
+                },
+            },
+        });
 
         if (allPurchaseRequests.length === 0) {
             return reply.status(404).send(allPurchaseRequests);
