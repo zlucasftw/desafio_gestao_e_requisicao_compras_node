@@ -9,7 +9,7 @@ Content-Type: application/json
 
 {
     "name": "John Doe",
-    "email": "john.doeee@example.com",
+    "email": "john.doe@example.com",
     "password": "password"
 }
 
@@ -28,13 +28,13 @@ Content-Type: application/json
 
 # API GET Endpoint to fetch user buying requests
 GET http://localhost:3333/requests
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3ODc0NjYsImV4cCI6MTc1Nzc5MTA2Nn0.RmqIJRCxalGPXrjgE3bF95rz9MbglBJbADqfoi3msXo
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3OTMzNTQsImV4cCI6MTc1Nzc5Njk1NH0.p4nPIi3L5PVi6IyssjF_OrlTQMRwzMJWclwrSM5gWY8
 
 ###
 
 # API POST Endpoint to create a buying request
 POST http://localhost:3333/requests
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3ODc0NjYsImV4cCI6MTc1Nzc5MTA2Nn0.RmqIJRCxalGPXrjgE3bF95rz9MbglBJbADqfoi3msXo
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3OTMzNTQsImV4cCI6MTc1Nzc5Njk1NH0.p4nPIi3L5PVi6IyssjF_OrlTQMRwzMJWclwrSM5gWY8
 Content-Type: application/json
 
 {
@@ -62,5 +62,33 @@ Content-Type: application/json
 
 # API GET Endpoint to fetch a specific buying request by ID
 GET http://localhost:3333/requests/02cb950b-81a8-43dc-9c29-64ed524901b2
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3ODc0NjYsImV4cCI6MTc1Nzc5MTA2Nn0.RmqIJRCxalGPXrjgE3bF95rz9MbglBJbADqfoi3msXo
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3OTMzNTQsImV4cCI6MTc1Nzc5Njk1NH0.p4nPIi3L5PVi6IyssjF_OrlTQMRwzMJWclwrSM5gWY8
+
+###
+
+# API PATCH Endpoint to update a specific buying request by ID
+PATCH http://localhost:3333/requests/02cb950b-81a8-43dc-9c29-64ed524901b2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3OTMzNTQsImV4cCI6MTc1Nzc5Njk1NH0.p4nPIi3L5PVi6IyssjF_OrlTQMRwzMJWclwrSM5gWY8
+Content-Type: application/json
+
+{
+    "title": "Updated Purchase Request Title",
+    "description": "Updated description for the purchase request",
+    "quantity": 15,
+    "totalPrice": 200,
+    "items": [
+        {
+            "title": "Updated Item 1",
+            "description": "Updated description for Item 1",
+            "quantity": 7,
+            "price": 35
+        },
+        {
+            "title": "Updated Item 2",
+            "description": "Updated description for Item 2",
+            "quantity": 8,
+            "price": 40
+        }
+    ]
+}
 

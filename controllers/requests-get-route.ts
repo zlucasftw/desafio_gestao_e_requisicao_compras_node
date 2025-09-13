@@ -37,8 +37,10 @@ export const getAllRequestsRoute: FastifyPluginCallbackZod = (app) => {
                         })),
                     })),
                 }),
+                400: z.object({ message: z.string('Bad Request') }),
+                401: z.object({ message: z.string('Unauthorized') }),
                 404: z.array(),
-                401: z.object({ message: z.string('Unauthorized') })
+                500: z.object({ message: z.string('Internal Server Error') }),
             },
         }
     }, async (request, reply) => {
@@ -50,25 +52,29 @@ export const getAllRequestsRoute: FastifyPluginCallbackZod = (app) => {
         if (!userIdByToken || !token) {
             return reply.status(401).send();
         }
-                
-        const allPurchaseRequests = await prisma.purchaseRequests.findMany({
-            include: {
-                items: {
-                    select: {
-                        id: true,
-                        title: true,
-                        description: true,
-                        quantity: true,
-                        price: true,
+        
+        try {
+            const allPurchaseRequests = await prisma.purchaseRequests.findMany({
+                include: {
+                    items: {
+                        select: {
+                            id: true,
+                            title: true,
+                            description: true,
+                            quantity: true,
+                            price: true,
+                        }
                     }
-                }
-            },
-        });
+                },
+            });
 
-        if (allPurchaseRequests.length === 0) {
-            return reply.status(404).send(allPurchaseRequests);
+            if (allPurchaseRequests.length === 0) {
+                return reply.status(404).send(allPurchaseRequests);
+            }
+
+            return reply.status(200).send({ allPurchaseRequests });
+        } catch {
+            return reply.status(500).send();
         }
-
-        return reply.status(200).send({ allPurchaseRequests });
     });
 }

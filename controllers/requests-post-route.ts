@@ -29,7 +29,7 @@ export const requestsPostRoute: FastifyPluginCallbackZod = (app) => {
             }),
             response: {
                 201: z.object({
-                    id: z.uuidv4(),
+                    id: z.string(),
                     title: z.string(),
                     description: z.string().nullable(),
                     quantity: z.int(),
@@ -95,7 +95,7 @@ export const requestsPostRoute: FastifyPluginCallbackZod = (app) => {
                 omit: {
                     purchaseRequestId: true,
                 }
-            })
+            });
             
             const newPurchaseRequestResponse = {
                 items: registeredItems,
