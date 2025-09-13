@@ -51,8 +51,7 @@ export const submitRequestById: FastifyPluginCallbackZod = (app) => {
         
         const userIdByToken = await checkAuthorizationService(token);
         const userRoleByToken = await checkRoleService(token);
-        console.log(userRoleByToken)
-        console.log(userIdByToken)
+
         if (userIdByToken?.length === 0 || !userRoleByToken) {
             return reply.status(401).send();
         }
@@ -62,21 +61,17 @@ export const submitRequestById: FastifyPluginCallbackZod = (app) => {
         // TODO - Create a purchase request model respective to the database schema
         try {
             const purchaseById = await prisma.purchaseRequests.findFirst({
+                select: {
+                    status: true,
+                },
                 where: {
                     id: purchaseRequestId,
                 },
-                include: {
-                    items: {
-                        select: {
-                            id: true,
-                            title: true,
-                            description: true,
-                            quantity: true,
-                            price: true,
-                        }
-                    },
-                },
             });
+
+            if (!purchaseById || purchaseById.status !== "DRAFT") {
+                return reply.status(401).send();
+            }
 
             const updatedStatus = await prisma.purchaseRequests.update({
                 where: { 

@@ -10,6 +10,7 @@ import scalarAPIReference from '@scalar/fastify-api-reference';
 import { getRequestById } from "../controllers/requests-get-by-id.ts";
 import { patchRequestById } from "../controllers/requests-patch-by-id.ts";
 import { submitRequestById } from "../controllers/requests-submit-by-id.ts";
+import { approveRequestById } from "../controllers/requests-approve-by-id.ts";
 
 const app = fastify({
     logger: {
@@ -17,7 +18,7 @@ const app = fastify({
             target: 'pino-pretty',
             options: {
                 translateTime: 'HH:MM:ss Z',
-                ignore: 'pid,hostname'
+                ignore: 'pid,hostname',
             },
         },
     },
@@ -56,6 +57,7 @@ app.register(getAllRequestsRoute);
 app.register(getRequestById);
 app.register(patchRequestById);
 app.register(submitRequestById);
+app.register(approveRequestById);
 
 app.listen({ port: process.env.PORT || 3333, host: process.env.HOST }, () => {
     console.info(`Server is running at http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3333}`);
