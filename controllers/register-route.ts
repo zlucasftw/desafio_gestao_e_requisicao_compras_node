@@ -16,6 +16,7 @@ export const registerRoute: FastifyPluginCallbackZod = (app) => {
             email: z.email('Invalid email address'),
             name: z.string().min(4, 'Name must be at least 4 characters long'),
             password: z.string().min(6, 'Password must be at least 6 characters long').max(128),
+            role: z.enum(['USER', 'APPROVER']).optional(),
         }),
         response: {
             201: z.object({ id: z.uuid() }),
@@ -25,7 +26,7 @@ export const registerRoute: FastifyPluginCallbackZod = (app) => {
     },
 }, async (request, reply) => {
         
-        const { email, name, password } = request.body;
+        const { email, name, password, role } = request.body;
 
         const getExistingUserByEmail = await prisma.users.findUnique({
             select: { id: true, email: true },
@@ -37,10 +38,27 @@ export const registerRoute: FastifyPluginCallbackZod = (app) => {
         }
         
         const hashedPassword = await hash(password);
+        
+        if (request.body.role === 'APPROVER') {
+            const user = await prisma.users.create({
+                data: { email, name, password: hashedPassword, role: 'APPROVER' }
+            });
+        }
 
-        const user = await prisma.users.create({
-            data: { email, name, password: hashedPassword}
+        if (request.body.role !== 'APPROVER') {
+            const user = await prisma.users.create({
+                data: { email, name, password: hashedPassword }
+            });
+        }
+
+        const user = await prisma.users.findUnique({
+            select: { id: true },
+            where:  { email: email }
         });
+
+        if (!user) {
+            return reply.status(400).send();
+        }
 
         reply.header('origin', `http://${process.env.HOST}:${process.env.PORT}/auth/register/${user.id}`);
         return reply.status(201).send({ id: user.id });

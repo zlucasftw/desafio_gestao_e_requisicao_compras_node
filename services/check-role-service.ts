@@ -1,8 +1,7 @@
 import jwt from "jsonwebtoken";
-import type { JwtHeaderRequest } from "../models/jwt-input.ts";
 
-export const checkRoleService = async (token: string, role: string) => {
-    if (!role || !token) {
+export const checkRoleService = async (token: string) => {
+    if (!token) {
         return;
     }
 
@@ -18,7 +17,7 @@ export const checkRoleService = async (token: string, role: string) => {
         }
 
         const tokenBody = jwt.decode(token, { json: true });
-        
+
         if (!tokenBody) {
             return;
         }

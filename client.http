@@ -15,6 +15,19 @@ Content-Type: application/json
 
 ###
 
+# API POST Endpoint to register a user with 'APPROVER' role
+POST http://localhost:3333/auth/register
+Content-Type: application/json
+
+{
+    "name": "Master Yoda",
+    "email": "master_yoda@gmail.com",
+    "password": "password",
+    "role": "APPROVER"
+}
+
+###
+
 # API POST Endpoint to login a user
 POST http://localhost:3333/auth/login
 Content-Type: application/json
@@ -28,13 +41,13 @@ Content-Type: application/json
 
 # API GET Endpoint to fetch user buying requests
 GET http://localhost:3333/requests
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3OTMzNTQsImV4cCI6MTc1Nzc5Njk1NH0.p4nPIi3L5PVi6IyssjF_OrlTQMRwzMJWclwrSM5gWY8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkN2RkYTQ1MC04N2FjLTRhOTUtYjUzMi1iZmQ1ZjJlNGZiZjUiLCJyb2xlIjoibWFzdGVyX3lvZGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc4MDEzMTUsImV4cCI6MTc1NzgwNDkxNX0.g28v3Nygaj7_Kqq4GBUKszJpHUH1jtGDAeoTgcTrKFg
 
 ###
 
 # API POST Endpoint to create a buying request
 POST http://localhost:3333/requests
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3OTMzNTQsImV4cCI6MTc1Nzc5Njk1NH0.p4nPIi3L5PVi6IyssjF_OrlTQMRwzMJWclwrSM5gWY8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3OTgxNDMsImV4cCI6MTc1NzgwMTc0M30.1J4tGhcuH_UZQTZ0sK24dzYNnpa-V-8SCfHd9U_Kx-s
 Content-Type: application/json
 
 {
@@ -61,34 +74,47 @@ Content-Type: application/json
 ###
 
 # API GET Endpoint to fetch a specific buying request by ID
-GET http://localhost:3333/requests/02cb950b-81a8-43dc-9c29-64ed524901b2
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3OTMzNTQsImV4cCI6MTc1Nzc5Njk1NH0.p4nPIi3L5PVi6IyssjF_OrlTQMRwzMJWclwrSM5gWY8
+GET http://localhost:3333/requests/fd8c50a5-6d38-415c-94ac-efb14fbc1082
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3OTgxNDMsImV4cCI6MTc1NzgwMTc0M30.1J4tGhcuH_UZQTZ0sK24dzYNnpa-V-8SCfHd9U_Kx-s
 
 ###
 
 # API PATCH Endpoint to update a specific buying request by ID
-PATCH http://localhost:3333/requests/02cb950b-81a8-43dc-9c29-64ed524901b2
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3OTMzNTQsImV4cCI6MTc1Nzc5Njk1NH0.p4nPIi3L5PVi6IyssjF_OrlTQMRwzMJWclwrSM5gWY8
+PATCH http://localhost:3333/requests/fd8c50a5-6d38-415c-94ac-efb14fbc1082
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3OTgxNDMsImV4cCI6MTc1NzgwMTc0M30.1J4tGhcuH_UZQTZ0sK24dzYNnpa-V-8SCfHd9U_Kx-s
 Content-Type: application/json
 
 {
-    "title": "Updated Purchase Request Title",
-    "description": "Updated description for the purchase request",
-    "quantity": 15,
-    "totalPrice": 200,
+    "title": "Updated Title",
+    "description": "Updated description",
+    "quantity": 1,
+    "totalPrice": 10,
     "items": [
         {
-            "title": "Updated Item 1",
-            "description": "Updated description for Item 1",
-            "quantity": 7,
-            "price": 35
+            "title": "Updated Item 1.2",
+            "description": "Updated description for Item 1.2",
+            "quantity": 1,
+            "price": 2
         },
         {
-            "title": "Updated Item 2",
-            "description": "Updated description for Item 2",
-            "quantity": 8,
-            "price": 40
+            "title": "Updated Item 1.2",
+            "description": "Updated description for Item 1.2",
+            "quantity": 1,
+            "price": 2
         }
     ]
 }
 
+###
+
+# API POST Endpoint to change the status of a specific buying request by ID to 'SUBMITTED'
+POST http://localhost:3333/requests/02cb950b-81a8-43dc-9c29-64ed524901b2/submit
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOWFkZjVmNi0yMTIzLTQ3NDUtYTYwOS01NWUwODllY2QwYTYiLCJlbWFpbCI6Im1hc3Rlcl95b2RhQGdtYWlsLmNvbSIsInJvbGUiOiJBUFBST1ZFUiIsImlhdCI6MTc1NzgwMzM1MiwiZXhwIjoxNzU3ODM5MzUyfQ.E4V0WjwrP8ZHZUi7g9db425XYP9wNV2P8ZNyU3x7C6U
+
+###
+
+# API POST Endpoint to change the status of a specific buying request by ID to 'APPROVED'
+POST http://localhost:3333/requests/02cb950b-81a8-43dc-9c29-64ed524901b2/approve
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOWFkZjVmNi0yMTIzLTQ3NDUtYTYwOS01NWUwODllY2QwYTYiLCJlbWFpbCI6Im1hc3Rlcl95b2RhQGdtYWlsLmNvbSIsInJvbGUiOiJBUFBST1ZFUiIsImlhdCI6MTc1NzgwMzM1MiwiZXhwIjoxNzU3ODM5MzUyfQ.E4V0WjwrP8ZHZUi7g9db425XYP9wNV2P8ZNyU3x7C6U
+
+###

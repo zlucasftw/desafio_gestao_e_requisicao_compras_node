@@ -31,8 +31,7 @@ export const patchRequestById: FastifyPluginCallbackZod = (app) => {
                 })),
             }),
             response: {
-                200: z.any(),
-                /* 200: z.object({ 
+                200: z.object({ 
                     updatedPurchaseRequestItems: z.object({
                         id: z.string(),
                         title: z.string(),
@@ -50,8 +49,8 @@ export const patchRequestById: FastifyPluginCallbackZod = (app) => {
                             quantity: z.int(),
                             price: z.number(),
                         })),
-                    }), */
-                /* }), */
+                    }),
+                }),
                 400: z.object({ message: z.string('Bad Request') }),
                 401: z.object({ message: z.string('Unauthorized') }),
                 404: z.object({ message: z.string('Not Found') }),
@@ -87,9 +86,9 @@ export const patchRequestById: FastifyPluginCallbackZod = (app) => {
                 },
             });
 
-            /* if (!purchaseById || !itemsById) {
+            if (!purchaseById || !itemsById) {
                 return reply.status(404).send();
-            } */
+            }
 
             const total = updatedPurchaseRequest.items.reduce((accumulatedSum, item) => accumulatedSum + (item.price * item.quantity), 0);
             const updatedPurchaseRequestItems = await prisma.purchaseRequests.update({
@@ -111,24 +110,27 @@ export const patchRequestById: FastifyPluginCallbackZod = (app) => {
                     quantity: itemsById[index].quantity = item.quantity,
                     price: itemsById[index].price = item.price,
                     createdAt: itemsById[index].createdAt,
+                    purchaseRequestById: itemsById[index].purchaseRequestId,
                 };
             });
 
             const purchaseItemsRequestToUpdate = await prisma.requestItems.updateMany({
+                where: {
+                    purchaseRequestId: {
+                        contains: requestIdToUpdate,
+                    }
+                },
                 data: {
                     ...itemsToUpdate,
-                },
-                where: { purchaseRequestId: requestIdToUpdate },
+                }
             });
 
-            console.log(purchaseItemsRequestToUpdate);
-
             const updatedItems = {
-                updatedPurchaseRequestItems: updatedPurchaseRequestItems,
                 items: itemsToUpdate,
+                ...updatedPurchaseRequestItems,
             }
 
-            return reply.status(200).send(updatedItems);
+            return reply.status(200).send({ "updatedPurchaseRequestItems": updatedItems });
         /* } catch {
             return reply.status(400).send();
         } */

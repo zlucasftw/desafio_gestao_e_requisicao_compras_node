@@ -2,16 +2,17 @@ import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
 import { db as PrismaClient } from "../config/connection.ts";
 import { checkAuthorizationService } from "../services/check-authorization-service.ts";
 import z from 'zod';
+import { checkRoleService } from '../services/check-role-service.ts';
 
 const prisma = PrismaClient;
 
-export const getRequestById: FastifyPluginCallbackZod = (app) => {
+export const submitRequestById: FastifyPluginCallbackZod = (app) => {
 
-    app.get("/requests/:id", {
+    app.post("/requests/:id/submit", {
         schema: {
             tags: ['requests'],
-            summary: 'Get a request by its id',
-            description: 'This endpoint returns a request by a given id',
+            summary: 'Change the status of a request to SUBMITTED',
+            description: 'This endpoint changes the status of a request to SUBMITTED',
             headers: z.object({
                 authorization: z.string(),
             }),
@@ -20,7 +21,7 @@ export const getRequestById: FastifyPluginCallbackZod = (app) => {
             }),
             response: {
                 200: z.object({
-                    purchaseRequest: z.object({
+                    updatedStatus: z.object({
                         id: z.string(),
                         title: z.string(),
                         description: z.string().nullable(),
@@ -46,11 +47,13 @@ export const getRequestById: FastifyPluginCallbackZod = (app) => {
         }
     }, async (request, reply) => {
         
-        const token: string | undefined = request.headers.authorization;
+        const token: string = request.headers.authorization;
         
         const userIdByToken = await checkAuthorizationService(token);
-
-        if (!userIdByToken || !token) {
+        const userRoleByToken = await checkRoleService(token);
+        console.log(userRoleByToken)
+        console.log(userIdByToken)
+        if (userIdByToken?.length === 0 || !userRoleByToken) {
             return reply.status(401).send();
         }
 
@@ -74,15 +77,32 @@ export const getRequestById: FastifyPluginCallbackZod = (app) => {
                     },
                 },
             });
-            console.error(purchaseById);
-            
 
-            if (!purchaseById) {
-                console.error(purchaseById);
+            const updatedStatus = await prisma.purchaseRequests.update({
+                where: { 
+                    id: purchaseRequestId,
+                },
+                data: { 
+                    status: "SUBMITTED"
+                },
+                include: {
+                    items: {
+                        select: {
+                            id: true,
+                            title: true,
+                            description: true,
+                            quantity: true,
+                            price: true,
+                        }
+                    },
+                },
+            });
+
+            if (!purchaseById || !updatedStatus) {
                 return reply.status(404).send();
             }
 
-            return reply.status(200).send({ "purchaseRequest": purchaseById  });
+            return reply.status(200).send({ updatedStatus: updatedStatus  });
         } catch {
             return reply.status(400).send();
         }

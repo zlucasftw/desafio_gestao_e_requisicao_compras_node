@@ -8,6 +8,8 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import scalarAPIReference from '@scalar/fastify-api-reference';
 import { getRequestById } from "../controllers/requests-get-by-id.ts";
+import { patchRequestById } from "../controllers/requests-patch-by-id.ts";
+import { submitRequestById } from "../controllers/requests-submit-by-id.ts";
 
 const app = fastify({
     logger: {
@@ -52,6 +54,8 @@ app.register(registerRoute);
 app.register(requestsPostRoute);
 app.register(getAllRequestsRoute);
 app.register(getRequestById);
+app.register(patchRequestById);
+app.register(submitRequestById);
 
 app.listen({ port: process.env.PORT || 3333, host: process.env.HOST }, () => {
     console.info(`Server is running at http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3333}`);

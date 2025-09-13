@@ -20,8 +20,8 @@ enum Status {
 }
 
 model Users {
-  id       String @id @default(uuid())
-  email    String @unique
+  id       String   @id @default(uuid())
+  email    String   @unique
   name     String
   password String
 

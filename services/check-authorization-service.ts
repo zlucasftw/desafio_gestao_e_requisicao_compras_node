@@ -6,7 +6,7 @@ import type { JwtHeaderRequest } from "../models/jwt-input.ts";
 // the validation of the token
 export const checkAuthorizationService = async (token: string) => {
     if (!token) {
-        return false;
+        return;
     }
 
     if (!process.env.JWT_SECRET) {
@@ -17,17 +17,17 @@ export const checkAuthorizationService = async (token: string) => {
         const isJwtValid = jwt.verify(token, process.env.JWT_SECRET || "");
         
         if (!isJwtValid) {
-            return false;
+            return;
         }
 
         const tokenBody = jwt.decode(token, { json: true });        
 
         if (!tokenBody) {
-            return false;
+            return;
         }
         
         return tokenBody.sub;
     } catch {
-        return false;
+        return;
     }
 };
