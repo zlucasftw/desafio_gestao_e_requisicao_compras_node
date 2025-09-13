@@ -9,7 +9,7 @@ Content-Type: application/json
 
 {
     "name": "John Doe",
-    "email": "john.doe@example.com",
+    "email": "john.doeee@example.com",
     "password": "password"
 }
 
@@ -28,12 +28,13 @@ Content-Type: application/json
 
 # API GET Endpoint to fetch user buying requests
 GET http://localhost:3333/requests
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3ODc0NjYsImV4cCI6MTc1Nzc5MTA2Nn0.RmqIJRCxalGPXrjgE3bF95rz9MbglBJbADqfoi3msXo
 
 ###
 
 # API POST Endpoint to create a buying request
 POST http://localhost:3333/requests
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3NDY4NjAsImV4cCI6MTc1Nzc1MDQ2MH0.M7gX_pg14UbRJhvBzD-Rggp0EjS_DRdwfCPgY6eBv28
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3ODc0NjYsImV4cCI6MTc1Nzc5MTA2Nn0.RmqIJRCxalGPXrjgE3bF95rz9MbglBJbADqfoi3msXo
 Content-Type: application/json
 
 {
@@ -61,5 +62,5 @@ Content-Type: application/json
 
 # API GET Endpoint to fetch a specific buying request by ID
 GET http://localhost:3333/requests/02cb950b-81a8-43dc-9c29-64ed524901b2
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3NDY4NjAsImV4cCI6MTc1Nzc1MDQ2MH0.M7gX_pg14UbRJhvBzD-Rggp0EjS_DRdwfCPgY6eBv28
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJyb2xlIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc3ODc0NjYsImV4cCI6MTc1Nzc5MTA2Nn0.RmqIJRCxalGPXrjgE3bF95rz9MbglBJbADqfoi3msXo
 

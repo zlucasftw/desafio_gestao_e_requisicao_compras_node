@@ -20,7 +20,7 @@ export const getRequestById: FastifyPluginCallbackZod = (app) => {
             }),
             response: {
                 200: z.any(),
-                /* 201: z.object({
+                201: z.object({
                     id: z.uuidv4(),
                     title: z.string(),
                     description: z.string().nullable(),
@@ -31,12 +31,13 @@ export const getRequestById: FastifyPluginCallbackZod = (app) => {
                     updatedAt: z.date(),
                     userId: z.string(),
                     items: z.array(z.object({
+                        id: z.string(),
                         title: z.string(),
                         description: z.string().nullable(),
                         quantity: z.int(),
                         price: z.number(),
                     })),
-                }), */
+                }),
                 400: z.object({ message: z.string('Bad Request') }),
                 401: z.object({ message: z.string('Unauthorized') }),
                 404: z.object({ message: z.string('Not Found') }),

@@ -1,6 +1,4 @@
-import { fastify } from "fastify";
 import type { JwtHeaderRequest } from "../models/jwt-input.ts";
-import fastifyJwt from "@fastify/jwt";
 import jwt from "jsonwebtoken";
 
 export const authService = async (id: string, role: string) => {

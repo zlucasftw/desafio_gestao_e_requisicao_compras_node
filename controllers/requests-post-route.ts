@@ -12,6 +12,9 @@ export const requestsPostRoute: FastifyPluginCallbackZod = (app) => {
             tags: ['requests'],
             summary: 'Create a new purchase request',
             description: 'This endpoint creates a new purchase request',
+            headers: z.object({
+                authorization: z.string(),
+            }),
             body: z.object({
                 title: z.string().min(4, 'Title must be at least 4 characters long'),
                 description: z.string().nullable(),

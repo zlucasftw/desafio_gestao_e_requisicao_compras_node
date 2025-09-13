@@ -1,7 +1,7 @@
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
 import { db as PrismaClient } from "../config/connection.ts";
 import z from 'zod';
-import fastify from 'fastify';
+import { checkAuthorizationService } from '../services/check-authorization-service.ts';
 
 const prisma = PrismaClient;
 
@@ -13,25 +13,44 @@ export const getAllRequestsRoute: FastifyPluginCallbackZod = (app) => {
             tags: ['requests'],
             summary: 'Get all purchase requests',
             description: 'This endpoint retrieves all purchase requests',
-            /* response: { */
-                /* 200: z.object({
-                    purchases: z.object({
+            headers: z.object({
+                authorization: z.string(),
+            }),
+            response: {
+                200: z.object({
+                    allPurchaseRequests: z.array(z.object({
                         id: z.string(),
                         title: z.string(),
                         description: z.string().nullable(),
-                        quantity: z.number(),
+                        quantity: z.int(),
                         totalPrice: z.number(),
                         status: z.string(),
                         createdAt: z.date(),
                         updatedAt: z.date(),
                         userId: z.string(),
-                    }),
-                }), */
-                /* 404: z.null(), */
-            /* }, */
+                        items: z.array(z.object({
+                            id: z.string(),
+                            title: z.string(),
+                            description: z.string().nullable(),
+                            quantity: z.int(),
+                            price: z.number(),
+                        })),
+                    })),
+                }),
+                404: z.array(),
+                401: z.object({ message: z.string('Unauthorized') })
+            },
         }
     }, async (request, reply) => {
+
+        const token: string | undefined = request.headers.authorization;
         
+        const userIdByToken = await checkAuthorizationService(token);
+
+        if (!userIdByToken || !token) {
+            return reply.status(401).send();
+        }
+                
         const allPurchaseRequests = await prisma.purchaseRequests.findMany({
             include: {
                 items: {
@@ -41,8 +60,8 @@ export const getAllRequestsRoute: FastifyPluginCallbackZod = (app) => {
                         description: true,
                         quantity: true,
                         price: true,
-                    },
-                },
+                    }
+                }
             },
         });
 
