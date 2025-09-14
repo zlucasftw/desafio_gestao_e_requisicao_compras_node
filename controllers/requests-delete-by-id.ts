@@ -5,7 +5,7 @@ import z from 'zod';
 
 const prisma = PrismaClient;
 
-export const getRequestById: FastifyPluginCallbackZod = (app) => {
+export const deleteRequestById: FastifyPluginCallbackZod = (app) => {
     // TODO - Implement a soft delete instead of a hard delete
     // Create a table of deletion history to move deleted buying requests
     // that are logic deleted on their main table
@@ -38,13 +38,13 @@ export const getRequestById: FastifyPluginCallbackZod = (app) => {
             return reply.status(401).send();
         }
 
-        const purchaseRequestId = request.params.id;
+        const deleteRequestId = request.params.id;
 
         // TODO - Create a purchase request model respective to the database schema
         try {
             const checkIfDeleted = await prisma.purchaseRequests.findFirst({
                 where: {
-                    id: purchaseRequestId,
+                    id: deleteRequestId,
                 }
             });
 
@@ -52,13 +52,13 @@ export const getRequestById: FastifyPluginCallbackZod = (app) => {
                 return reply.status(404).send();
             }
 
-            const purchaseById = await prisma.purchaseRequests.delete({
+            const deletedByIdPurchase = await prisma.purchaseRequests.delete({
                 where: {
-                    id: purchaseRequestId,
+                    id: deleteRequestId,
                 },
             });
 
-            if (!purchaseById) {
+            if (!deletedByIdPurchase) {
                 return reply.status(404).send();
             }
 

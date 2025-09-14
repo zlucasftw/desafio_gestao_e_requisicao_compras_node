@@ -73,12 +73,9 @@ export const getRequestById: FastifyPluginCallbackZod = (app) => {
                         }
                     },
                 },
-            });
-            console.error(purchaseById);
-            
+            });            
 
             if (!purchaseById) {
-                console.error(purchaseById);
                 return reply.status(404).send();
             }
 

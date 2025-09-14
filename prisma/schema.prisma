@@ -48,7 +48,7 @@ model PurchaseRequests {
   histories ApprovalHistory[]
 
   userId String
-  user   Users  @relation(fields: [userId], references: [id])
+  user   Users  @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }
 
 model RequestItems {
@@ -62,7 +62,7 @@ model RequestItems {
   createdAt DateTime  @default(now())
 
   purchaseRequestId   String
-  purchaseRequest     PurchaseRequests @relation(fields: [purchaseRequestId], references: [id])
+  purchaseRequest     PurchaseRequests @relation(fields: [purchaseRequestId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }
 
 model ApprovalHistory {

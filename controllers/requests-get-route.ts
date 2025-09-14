@@ -69,7 +69,7 @@ export const getAllRequestsRoute: FastifyPluginCallbackZod = (app) => {
             });
 
             if (allPurchaseRequests.length === 0) {
-                return reply.status(404).send(allPurchaseRequests);
+                return reply.status(404).send([]);
             }
 
             return reply.status(200).send({ allPurchaseRequests });
