@@ -12,6 +12,7 @@ import { patchRequestById } from "../controllers/requests-patch-by-id.ts";
 import { submitRequestById } from "../controllers/requests-submit-by-id.ts";
 import { approveRequestById } from "../controllers/requests-approve-by-id.ts";
 import { rejectRequestById } from "../controllers/requests-reject-by-id.ts";
+import { getReportSummary } from "../controllers/requests-get-reports-summary.ts";
 
 const app = fastify({
     logger: {
@@ -60,6 +61,7 @@ app.register(patchRequestById);
 app.register(submitRequestById);
 app.register(approveRequestById);
 app.register(rejectRequestById);
+app.register(getReportSummary);
 
 app.listen({ port: process.env.PORT || 3333, host: process.env.HOST }, () => {
     console.info(`Server is running at http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3333}`);
