@@ -66,10 +66,10 @@ model RequestItems {
 }
 
 model ApprovalHistory {
-  id String @id @default(uuid())
+  id String @id     @default(uuid())
 
-  oldStatus Status
-  newStatus Status
+  oldStatus Status  @default(SUBMITTED)
+  newStatus Status  
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

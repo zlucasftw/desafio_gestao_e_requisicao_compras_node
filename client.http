@@ -39,9 +39,20 @@ Content-Type: application/json
 
 ###
 
+# API POST Endpoint to login a user with a 'APPROVER' role
+POST http://localhost:3333/auth/login
+Content-Type: application/json
+
+{
+    "email": "master_yoda@gmail.com",
+    "password": "password"
+}
+
+###
+
 # API GET Endpoint to fetch user buying requests
 GET http://localhost:3333/requests
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkN2RkYTQ1MC04N2FjLTRhOTUtYjUzMi1iZmQ1ZjJlNGZiZjUiLCJyb2xlIjoibWFzdGVyX3lvZGFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NTc4MDEzMTUsImV4cCI6MTc1NzgwNDkxNX0.g28v3Nygaj7_Kqq4GBUKszJpHUH1jtGDAeoTgcTrKFg
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOWFkZjVmNi0yMTIzLTQ3NDUtYTYwOS01NWUwODllY2QwYTYiLCJlbWFpbCI6Im1hc3Rlcl95b2RhQGdtYWlsLmNvbSIsInJvbGUiOiJBUFBST1ZFUiIsImlhdCI6MTc1NzgwNTM0MiwiZXhwIjoxNzU3ODQxMzQyfQ.SKme-I3gPE0wqzWyCHdoZJkiMBnnciJQ2Y75Iqx14_4
 
 ###
 
@@ -108,13 +119,19 @@ Content-Type: application/json
 ###
 
 # API POST Endpoint to change the status of a specific buying request by ID to 'SUBMITTED'
-POST http://localhost:3333/requests/02cb950b-81a8-43dc-9c29-64ed524901b2/submit
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NTc4MDQ3ODAsImV4cCI6MTc1Nzg0MDc4MH0.7LCpDFB8q2Pf9Vr3_Dx9PhQOSrUPPsT2a7yUKEyUW0I
+POST http://localhost:3333/requests/1e0d8217-9d34-4989-a4ea-21bb097b12b3/submit
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOWFkZjVmNi0yMTIzLTQ3NDUtYTYwOS01NWUwODllY2QwYTYiLCJlbWFpbCI6Im1hc3Rlcl95b2RhQGdtYWlsLmNvbSIsInJvbGUiOiJBUFBST1ZFUiIsImlhdCI6MTc1NzgwNzY5MiwiZXhwIjoxNzU3ODQzNjkyfQ._CsvinG2uWgfeHuoy16B7hZrinMYdHmxuAGZ08Mablo
 
 ###
 
 # API POST Endpoint to change the status of a specific buying request by ID to 'APPROVED'
-POST http://localhost:3333/requests/02cb950b-81a8-43dc-9c29-64ed524901b2/approve
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjExYTUzYi1kNjIxLTRhMTktYjgyZi04YjI1Y2IzNjZhYmQiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NTc4MDQ3ODAsImV4cCI6MTc1Nzg0MDc4MH0.7LCpDFB8q2Pf9Vr3_Dx9PhQOSrUPPsT2a7yUKEyUW0I
+POST http://localhost:3333/requests/987ec6e4-053b-4327-a6b2-5874d3668bc7/approve
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOWFkZjVmNi0yMTIzLTQ3NDUtYTYwOS01NWUwODllY2QwYTYiLCJlbWFpbCI6Im1hc3Rlcl95b2RhQGdtYWlsLmNvbSIsInJvbGUiOiJBUFBST1ZFUiIsImlhdCI6MTc1NzgwNzY5MiwiZXhwIjoxNzU3ODQzNjkyfQ._CsvinG2uWgfeHuoy16B7hZrinMYdHmxuAGZ08Mablo
+
+###
+
+# API POST Endpoint to change the status of a specific buying request by ID to 'REJECTED'
+POST http://localhost:3333/requests/1e0d8217-9d34-4989-a4ea-21bb097b12b3/reject
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlOWFkZjVmNi0yMTIzLTQ3NDUtYTYwOS01NWUwODllY2QwYTYiLCJlbWFpbCI6Im1hc3Rlcl95b2RhQGdtYWlsLmNvbSIsInJvbGUiOiJBUFBST1ZFUiIsImlhdCI6MTc1NzgwNTM0MiwiZXhwIjoxNzU3ODQxMzQyfQ.SKme-I3gPE0wqzWyCHdoZJkiMBnnciJQ2Y75Iqx14_4
 
 ###

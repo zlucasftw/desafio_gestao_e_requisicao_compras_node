@@ -67,7 +67,6 @@ export const patchRequestById: FastifyPluginCallbackZod = (app) => {
         }
 
         const requestIdToUpdate = request.params.id;
-        console.error(requestIdToUpdate);
 
         const updatedPurchaseRequest = request.body;
 
@@ -114,16 +113,34 @@ export const patchRequestById: FastifyPluginCallbackZod = (app) => {
                 };
             });
 
-            const purchaseItemsRequestToUpdate = await prisma.requestItems.updateMany({
-                where: {
-                    purchaseRequestId: {
-                        contains: requestIdToUpdate,
+            // const purchaseItemsRequestToUpdate = await prisma.requestItems.updateMany({
+            //     where: {
+            //         purchaseRequestId: {
+            //             contains: requestIdToUpdate,
+            //         }
+            //     },
+            //     data: {
+            //         ...itemsToUpdate,
+            //     }
+            // });
+            const purchaseItemsRequestToUpdate = itemsToUpdate.map(async (item) => {
+                const updatedItem = await prisma.requestItems.update({
+                    where: {
+                        id: item.id,
+                    },
+                    data: {
+                        title: item.title,
+                        description: item.description,
+                        quantity: item.quantity,
+                        price: item.price,
+                        createdAt: item.createdAt,
+                        purchaseRequestId: item.purchaseRequestById,
                     }
-                },
-                data: {
-                    ...itemsToUpdate,
-                }
+                });
+                return updatedItem;
             });
+            
+            console.log(purchaseItemsRequestToUpdate)
 
             const updatedItems = {
                 items: itemsToUpdate,

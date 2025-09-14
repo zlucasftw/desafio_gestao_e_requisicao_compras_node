@@ -6,13 +6,13 @@ import { checkRoleService } from '../services/check-role-service.ts';
 
 const prisma = PrismaClient;
 
-export const approveRequestById: FastifyPluginCallbackZod = (app) => {
+export const rejectRequestById: FastifyPluginCallbackZod = (app) => {
 
-    app.post("/requests/:id/approve", {
+    app.post("/requests/:id/reject", {
         schema: {
             tags: ['requests'],
-            summary: 'Change the status of a request to APPROVED',
-            description: 'This endpoint changes the status of a request to APPROVED',
+            summary: 'Change the status of a request to REJECTED',
+            description: 'This endpoint changes the status of a request to REJECTED',
             headers: z.object({
                 authorization: z.string(),
             }),
@@ -78,7 +78,7 @@ export const approveRequestById: FastifyPluginCallbackZod = (app) => {
                     id: purchaseRequestId,
                 },
                 data: { 
-                    status: "APPROVED"
+                    status: "REJECTED"
                 },
                 include: {
                     items: {
@@ -96,23 +96,6 @@ export const approveRequestById: FastifyPluginCallbackZod = (app) => {
             if (!purchaseById || !updatedStatus) {
                 return reply.status(404).send();
             }
-
-            // TODO - Create an history registry of the status changes not only for approved requests
-            // Find it's previous registry on the approvalHistory table
-            // and use that data to either create or update the status changes
-            
-            // const approvedRequest = await prisma.approvalHistory.findFirst({
-
-            // })
-
-            const approvedRequest = await prisma.approvalHistory.create({
-                data: {
-                    oldStatus: "SUBMITTED",
-                    newStatus: "APPROVED",
-                    approverId: userIdByToken,
-                    purchaseRequestId: purchaseRequestId,
-                }
-            });
 
             return reply.status(200).send({ updatedStatus: updatedStatus });
         } catch {
