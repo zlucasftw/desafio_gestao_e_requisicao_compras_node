@@ -39,7 +39,7 @@ export const getAllRequestsRoute: FastifyPluginCallbackZod = (app) => {
                 }),
                 400: z.object({ message: z.string('Bad Request') }),
                 401: z.object({ message: z.string('Unauthorized') }),
-                404: z.array(),
+                404: z.array(z.object({})),
                 500: z.object({ message: z.string('Internal Server Error') }),
             },
         }
